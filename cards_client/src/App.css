@@ -38,6 +38,10 @@
 }
 
 
+input {
+  width: 80%;
+  margin: 10%
+}
 
 .cards {
   display: flex;
@@ -93,4 +97,25 @@
 
 .pickingColor {
   cursor: pointer;
+}
+
+.addingCard {
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  font-size: 50px;
+  text-align: center;
+  align-items: center;
+  border: solid black 1px;
+}
+
+.addCard{
+  border: solid black 1px;
+}
+
+.addColor {
+  width: 120px;
+  margin-left: 10%;
+  margin-bottom: 10%;
+  background-color: white;
 }

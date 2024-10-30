@@ -9,7 +9,15 @@ function UpdateColor({
   setSubmit,
   setIsUpdatingColor,
   setColor,
+  setText
 }) {
+
+  
+  useEffect(() => {
+    updating();
+  },[]); 
+
+
   const updating = async () => {
     await axios
       .put(`http://localhost:5000/cards/${card.id}`, {
@@ -18,19 +26,15 @@ function UpdateColor({
       })
       .then((response) => {
         setColor("");
+        setText('');
         setSubmit(false);
         setCards(response.data);
         setIsUpdatingColor("");
-        // setCardId('');
       })
       .catch((error) => {
         console.error("There was an error updating the card!", error);
       });
   };
-
-  useEffect(() => {
-    updating();
-  });
 
   return (
     <></>
