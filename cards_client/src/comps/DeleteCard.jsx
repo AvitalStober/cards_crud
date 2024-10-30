@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 
 function DeleteCard({ id, setCards, setDeleteCard }) {
 
-//   const handleDelete = (id) => {
-//     // setCardId(id);
-//     setDeleteCard(true);
-//   };
 
   const deleteCard = async () => {
     setDeleteCard(true);

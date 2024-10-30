@@ -16,11 +16,23 @@ let cards = [
 ];
 
 app.get("/cards", (req, res) => {
-  res.send(cards);
+  try {
+    res.send(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.get("/cards/:id", (req, res) => {
-  res.send(cards.filter((book) => book.id == req.params.id)[0]);
+  try {
+    const card = cards.filter((book) => book.id == req.params.id)[0];
+    if (!card) {
+      return res.status(404).json({ error: "Card not found" });
+    }
+    res.send(card);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.post("/cards", (req, res) => {
@@ -36,32 +48,40 @@ app.post("/cards", (req, res) => {
     cards.push(newCard);
     res.status(201).json(newCard);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
 app.put("/cards/:id", (req, res) => {
-  const { text, color } = req.body;
+  try {
+    const { text, color } = req.body;
 
-  const newCard = {
-    id: parseInt(req.params.id),
-    text: text,
-    color: color,
-  };
+    const newCard = {
+      id: parseInt(req.params.id),
+      text: text,
+      color: color,
+    };
 
-  const newArray = cards.map((book) =>
-    book.id == req.params.id ? newCard : book
-  );
-  
-  cards = newArray;
+    const newArray = cards.map((book) =>
+      book.id == req.params.id ? newCard : book
+    );
 
-  res.send(cards);
+    cards = newArray;
+
+    res.send(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.delete("/cards/:id", (req, res) => {
-  const afterDelete = cards.filter((book) => book.id != req.params.id);
-  cards = afterDelete;
-  res.send(cards);
+  try {
+    const afterDelete = cards.filter((book) => book.id != req.params.id);
+    cards = afterDelete;
+    res.send(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.listen(PORT, () => {

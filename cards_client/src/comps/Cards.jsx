@@ -12,7 +12,6 @@ function Cards() {
   const [isAdding, setIsAdding] = useState(false);
 
   const [submit, setSubmit] = useState(false);
-  const [deleteCard, setDeleteCard] = useState(false);
 
   const [color, setColor] = useState("");
   const [text, setText] = useState("");
@@ -40,18 +39,13 @@ function Cards() {
     setSubmit(true);
   };
 
-  // const handleDelete = (id) => {
-  //   setCardId(id);
-  //   setDeleteCard(true);
-  // };
-
   const handleAdd = () => {
     setIsAdding(true);
   };
 
   return (
     <div>
-      Cards
+      
       <div className="cards">
         {cards.map((card) => (
           <div
@@ -95,7 +89,6 @@ function Cards() {
                     setCards={setCards}
                     setDeleteCard={setIsUpdatingColor}
                   />
-                 
                 </div>
               ) : (
                 <div className="circlesToPick">

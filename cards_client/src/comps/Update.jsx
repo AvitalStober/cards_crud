@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 
 function UpdateColor({
@@ -12,14 +12,7 @@ function UpdateColor({
   setText
 }) {
 
-  
-  useEffect(() => {
-    updating();
-  },[]); 
-
-
-  const updating = async () => {
-    await axios
+    axios
       .put(`http://localhost:5000/cards/${card.id}`, {
         text: text?text:card.text,
         color: color ? color : card.color,
@@ -34,7 +27,6 @@ function UpdateColor({
       .catch((error) => {
         console.error("There was an error updating the card!", error);
       });
-  };
 
   return (
     <></>
