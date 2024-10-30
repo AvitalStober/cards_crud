@@ -3,22 +3,22 @@ import axios from "axios";
 
 function UpdateColor({
   card,
-  cards,
   setCards,
   color,
+  text,
+  setSubmit,
   setIsUpdatingColor,
   setColor,
-  setCardId,
 }) {
   const updating = async () => {
-    console.log(card.id, card.text, card.color);
     await axios
       .put(`http://localhost:5000/cards/${card.id}`, {
-        text: card.text,
+        text: text?text:card.text,
         color: color ? color : card.color,
       })
       .then((response) => {
         setColor("");
+        setSubmit(false);
         setCards(response.data);
         setIsUpdatingColor("");
         // setCardId('');
@@ -30,9 +30,11 @@ function UpdateColor({
 
   useEffect(() => {
     updating();
-  }, []);
+  });
 
-  return null;
+  return (
+    <></>
+  );
 }
 
 export default UpdateColor;

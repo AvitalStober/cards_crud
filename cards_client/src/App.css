@@ -82,5 +82,15 @@
 }
 
 .pickingColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.pickingColor {
   cursor: pointer;
 }

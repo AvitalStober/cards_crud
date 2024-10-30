@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UpdateColor from "./UpdateColor";
+import UpdateColor from "./Update";
+import DeleteCard from "./DeleteCard";
 
 let colorsArray = ["red", "blue", "green", "pink", "yellow"];
 
 function Cards() {
   const [cards, setCards] = useState([]);
   const [isUpdatingColor, setIsUpdatingColor] = useState(false);
+  const [isUpdatingText, setIsUpdatingText] = useState(false);
+
+  const [submit, setSubmit] = useState(false);
+  const [deleteCard, setDeleteCard] = useState(false);
+
   const [color, setColor] = useState("");
+  const [text, setText] = useState("");
   const [cardId, setCardId] = useState("");
 
   useEffect(() => {
@@ -16,18 +23,29 @@ function Cards() {
       .then((response) => setCards(response.data));
   }, []);
 
-  useEffect(() => {
-    console.log(cards);
-    
-  }, [cards]);
-
   const updateColor = (id) => {
-    setCardId(id)
+    setCardId(id);
     setIsUpdatingColor(true);
+  };
+
+  const updateText = (id, text) => {
+    setText(text);
+    setCardId(id);
+    setIsUpdatingText(true);
   };
 
   const handleColorClick = (color) => {
     setColor(color);
+  };
+
+  const handleTextSend = () => {
+    setIsUpdatingText(false);
+    setSubmit(true);
+  };
+
+  const handleDelete = (id) => {
+    setCardId(id);
+    setDeleteCard(true);
   };
 
   return (
@@ -41,8 +59,27 @@ function Cards() {
             style={{ backgroundColor: card.color }}
           >
             <div className="content">
-              <h2 className="cardText">{card.text}</h2>
-              {!isUpdatingColor || !(cardId === card.id) ?  (
+              {!isUpdatingText || !(cardId === card.id) ? (
+                <h2
+                  className="cardText"
+                  onClick={() => updateText(card.id, card.text)}
+                >
+                  {card.text}
+                </h2>
+              ) : (
+                <div className="updateTextInput">
+                  <input
+                    style={{ backgroundColor: card.color, color: "white" }}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                  />
+                  <button onClick={handleTextSend}>Send</button>
+                  <button onClick={() => setIsUpdatingText(false)}>
+                    Cancel
+                  </button>
+                </div>
+              )}
+              {!isUpdatingColor || !(cardId === card.id) ? (
                 <div className="squereIcons">
                   <div
                     className="circle icon"
@@ -51,7 +88,12 @@ function Cards() {
                     ◯
                   </div>
 
-                  <div className="garbageIcon icon">🗑️</div>
+                  <div
+                    className="garbageIcon icon"
+                    onClick={() => handleDelete(card.id)}
+                  >
+                    🗑️
+                  </div>
                 </div>
               ) : (
                 <div className="circlesToPick">
@@ -60,14 +102,7 @@ function Cards() {
                       key={color}
                       className="pickingColor"
                       style={{
-                        width: "16px",
-                        height: "16px",
-                        borderRadius: "50%",
                         background: color,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontWeight: "bold",
                       }}
                       onClick={() => {
                         handleColorClick(color);
@@ -80,19 +115,22 @@ function Cards() {
                 </div>
               )}
             </div>
-            {color && cardId === card.id && (
+            {(color || submit) && cardId === card.id && (
               <UpdateColor
                 card={card}
-                cards={cards}
                 setCards={setCards}
                 color={color}
+                text={text}
+                setSubmit={setSubmit}
                 setCardId={setCardId}
                 setColor={setColor}
                 setIsUpdatingColor={setIsUpdatingColor}
               />
             )}
+            {deleteCard && <DeleteCard id={cardId} setCards={setCards} setDeleteCard={setIsUpdatingColor} />}
           </div>
         ))}
+        <div className=""></div>
       </div>
     </div>
   );
