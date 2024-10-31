@@ -1,4 +1,4 @@
-.App {
+ .App {
   text-align: center;
 }
 
@@ -44,7 +44,7 @@ input {
 }
 
 button {
-  background-color: #c0c0c0; /* צבע ירוק */
+  background-color: #c0c0c0;
   color: white;
   border: none;
   padding: 5px;
@@ -54,7 +54,7 @@ button {
 }
 
 button:hover {
-  background-color: #7b7b7b; /* צבע כהה יותר */
+  background-color: #7b7b7b;
 }
 
 .cards {
@@ -85,7 +85,6 @@ button:hover {
   justify-content: space-between;
   width: 144px;
   padding: 3px;
-  /* bottom: 0; */
 }
 
 .icon {
@@ -132,4 +131,8 @@ button:hover {
   margin-left: 10%;
   margin-bottom: 10%;
   background-color: white;
-}
+} 
+
+
+
+

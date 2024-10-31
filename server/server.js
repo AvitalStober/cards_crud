@@ -74,6 +74,35 @@ app.put("/cards/:id", (req, res) => {
   }
 });
 
+app.put("/cards", (req, res) => {
+  try {
+    const { oldIndex, newIndex } = req.body;
+
+    console.log(oldIndex, newIndex);
+
+    const newArray = cards.map((card, index) =>
+      oldIndex < newIndex
+        ? index < oldIndex || index > newIndex
+          ? card
+          : index === newIndex
+          ? cards[oldIndex]
+          : cards[index + 1]
+        : index > oldIndex || index < newIndex
+        ? card
+        : index !== newIndex
+        ? cards[index - 1]
+        : cards[ oldIndex]
+    );
+
+    cards = newArray;
+    console.log(newArray);
+
+    res.send(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.delete("/cards/:id", (req, res) => {
   try {
     const afterDelete = cards.filter((book) => book.id != req.params.id);
